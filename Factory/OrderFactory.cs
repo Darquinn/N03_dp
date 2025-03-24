@@ -2,6 +2,7 @@
 
 namespace fastwebsite.Factory
 {
+    //hsdihihda
     public abstract class OrderFactory
     {
         public abstract Order CreateOrder(int accountId, decimal totalPrice, string codeCoupon, int typePaymentId);
