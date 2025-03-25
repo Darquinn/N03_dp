@@ -1,10 +1,10 @@
-﻿using fastwebsite.PrototypePattern;
+﻿using fastwebsite.ObserverPattern;
 using System;
 using System.Collections.Generic;
 
 namespace fastwebsite.Entities;
 
-public partial class Order : IPrototype<Order>
+public partial class Order : ISubject<Order>
 {
     public int OrderId { get; set; }
     public int? AccountId { get; set; }
@@ -23,28 +23,39 @@ public partial class Order : IPrototype<Order>
         AccountId = accountId;
         TotalPrice = totalPrice;
         OrderDate = DateTime.Now;
-        State = state;
+        State = state;  // Giữ trạng thái dưới dạng chuỗi
         CodeCoupon = codeCoupon;
         TypePaymentId = typePaymentId;
     }
 
     public Order() { }
 
-    //Prototype - Lân
-    public Order Clone()
+
+    //Observer - Lân 
+    private readonly List<IOrderObserver> ob = new List<IOrderObserver>();
+
+    public void Attach(IOrderObserver observer)
     {
-        return new Order
+        ob.Add(observer);
+    }
+
+    public void Detach(IOrderObserver observer)
+    {
+        ob.Remove(observer);
+    }
+
+    public void Notify()
+    {
+        foreach (var observer in ob)
         {
-            AccountId = this.AccountId,
-            TotalPrice = this.TotalPrice,
-            OrderDate = DateTime.Now,
-            State = "Pending",
-            CodeCoupon = this.CodeCoupon,
-            TypePaymentId = this.TypePaymentId,
+            observer.Update(this);
+        }
+    }
 
-
-            OrderItems = new List<OrderItem>(this.OrderItems)
-        };
+    public void ChangeState(string newState)
+    {
+        State = newState;
+        Console.WriteLine($"📢 Đơn hàng {OrderId} thay đổi trạng thái thành: {State}");
+        Notify();  
     }
 }
-
