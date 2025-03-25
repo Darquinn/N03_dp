@@ -1,9 +1,10 @@
-﻿using System;
+﻿using fastwebsite.CompositePattern;
+using System;
 using System.Collections.Generic;
 
 namespace fastwebsite.Entities;
 
-public partial class Product
+public partial class Product : ICatalogComponent
 {
     public int ProductId { get; set; }
 
@@ -24,4 +25,9 @@ public partial class Product
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+
+    public void Display(int depth)
+    {
+        Console.WriteLine(new string('-', depth) + $" [Product] {ProductName} - ${Price}");
+    }
 }
