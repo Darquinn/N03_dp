@@ -1,9 +1,10 @@
-﻿using System;
+﻿using fastwebsite.PrototypePattern;
+using System;
 using System.Collections.Generic;
 
 namespace fastwebsite.Entities;
 
-public partial class Order
+public partial class Order : IPrototype<Order>
 {
     public int OrderId { get; set; }
     public int? AccountId { get; set; }
@@ -22,9 +23,28 @@ public partial class Order
         AccountId = accountId;
         TotalPrice = totalPrice;
         OrderDate = DateTime.Now;
-        State = state;  // Giữ trạng thái dưới dạng chuỗi
+        State = state;
         CodeCoupon = codeCoupon;
         TypePaymentId = typePaymentId;
     }
+
     public Order() { }
+
+    //Prototype - Lân
+    public Order Clone()
+    {
+        return new Order
+        {
+            AccountId = this.AccountId,
+            TotalPrice = this.TotalPrice,
+            OrderDate = DateTime.Now,
+            State = "Pending",
+            CodeCoupon = this.CodeCoupon,
+            TypePaymentId = this.TypePaymentId,
+
+
+            OrderItems = new List<OrderItem>(this.OrderItems)
+        };
+    }
 }
+
