@@ -23,7 +23,7 @@ public partial class Order : ISubject<Order>
         AccountId = accountId;
         TotalPrice = totalPrice;
         OrderDate = DateTime.Now;
-        State = state;  // Giữ trạng thái dưới dạng chuỗi
+        State = state;
         CodeCoupon = codeCoupon;
         TypePaymentId = typePaymentId;
     }
@@ -55,7 +55,7 @@ public partial class Order : ISubject<Order>
     public void ChangeState(string newState)
     {
         State = newState;
-        Console.WriteLine($"📢 Đơn hàng {OrderId} thay đổi trạng thái thành: {State}");
+        Console.WriteLine($"Đơn hàng {OrderId} thay đổi trạng thái thành: {State}");
         Notify();  
     }
 }

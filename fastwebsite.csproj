@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Entities\" />
-    <Folder Include="PrototypePattern\" />
   </ItemGroup>
 
   <ItemGroup>
